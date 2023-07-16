@@ -1,0 +1,72 @@
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body {
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "Roboto", "Oxygen",
+    "Ubuntu", "Cantarell", "Fira Sans", "Droid Sans", "Helvetica Neue",
+    sans-serif;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  font-size: 10px;
+}
+
+.header {
+  text-align: center;
+  font-size: 0.9rem;
+}
+.container {
+  display: flex;
+  width: 100%;
+  height: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 1rem;
+}
+.container_input {
+  display: flex;
+  flex-direction: row;
+}
+.container_input input[type="text"] {
+  padding: 12px;
+  margin-right: 10px;
+  border-radius: 5px;
+  border: 1px solid #ccc;
+  outline: none;
+}
+.container_input button {
+  padding: 5px 10px;
+  background-color: #4caf50;
+  color: white;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+}
+.container_todoItems {
+  display: flex;
+  align-items: center;
+  flex-direction: column;
+  font-size: 1rem;
+  padding: 0.3rem;
+}
+.todo-item {
+  margin: 0.5rem;
+}
+
+.btn {
+  margin-left: 10px;
+  padding: 5px 10px;
+  color: white;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+}
+.update-btn {
+  background-color: #332a29;
+}
+.delete-btn {
+  background-color: #f44336;
+}
