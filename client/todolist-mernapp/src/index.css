@@ -24,18 +24,20 @@ body {
   display: flex;
   justify-content: center;
   align-items: center;
-  padding: 1rem;
+  padding: 1.5rem;
 }
+
 .container_input {
   display: flex;
   flex-direction: row;
 }
 .container_input input[type="text"] {
-  padding: 12px;
+  padding: 10px;
   margin-right: 10px;
   border-radius: 5px;
   border: 1px solid #ccc;
   outline: none;
+  width: 500px;
 }
 .container_input button {
   padding: 5px 10px;
@@ -54,6 +56,14 @@ body {
 }
 .todo-item {
   margin: 0.5rem;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: center;
+}
+
+.item-content {
+  font-size: 1.5rem;
 }
 
 .btn {
