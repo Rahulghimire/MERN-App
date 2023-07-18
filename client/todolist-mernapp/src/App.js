@@ -1,8 +1,9 @@
 import "./App.css";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import axios from "axios";
 function App() {
   const [itemText, setItemText] = useState("");
+  const [items, setItems] = useState([]);
 
   const addItem = async (e) => {
     e.preventDefault();
@@ -11,6 +12,33 @@ function App() {
         item: itemText,
       });
       console.log(res);
+      setItems((prev) => [...prev, res.data]);
+      setItemText("");
+    } catch (err) {
+      console.log(err);
+    }
+  };
+
+  useEffect(() => {
+    console.log("useeffect runnign");
+    const getItemsList = async () => {
+      try {
+        const res = await axios.get("http://localhost:5500/api/items");
+        console.log(res.data);
+        setItems(res.data);
+      } catch (err) {
+        console.log(err);
+      }
+    };
+    getItemsList();
+  }, []);
+
+  const deleteItem = async (id) => {
+    try {
+      const res = await axios.delete(`http://localhost:5500/api/item/${id}`);
+      console.log(res.data);
+      const newItems = items.filter((item) => item._id !== id);
+      setItems(newItems);
     } catch (err) {
       console.log(err);
     }
@@ -33,16 +61,20 @@ function App() {
         </form>
       </div>
       <div className="container_todoItems">
-        <div className="todo-item">
-          <p className="item-content">This is a todo item</p>
-          <button className="btn update-btn">Update</button>
-          <button className="btn delete-btn">Delete</button>
-        </div>
-        <div className="todo-item">
-          <p className="item-content">This is a todo item</p>
-          <button className="btn update-btn">Update</button>
-          <button className="btn delete-btn">Delete</button>
-        </div>
+        {items.map((item) => {
+          return (
+            <div className="todo-item" key={item._id}>
+              <p className="item-content">{item.item}</p>
+              <button className="btn update-btn">Update</button>
+              <button
+                className="btn delete-btn"
+                onClick={() => deleteItem(item._id)}
+              >
+                Delete
+              </button>
+            </div>
+          );
+        })}
       </div>
     </div>
   );
