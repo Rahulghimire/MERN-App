@@ -4,6 +4,8 @@ import axios from "axios";
 function App() {
   const [itemText, setItemText] = useState("");
   const [items, setItems] = useState([]);
+  const [isUpdating, setIsUpdating] = useState("");
+  const [updateItemText, setUpdateItemText] = useState("");
 
   const addItem = async (e) => {
     e.preventDefault();
@@ -33,6 +35,7 @@ function App() {
     getItemsList();
   }, []);
 
+  //delete the item
   const deleteItem = async (id) => {
     try {
       const res = await axios.delete(`http://localhost:5500/api/item/${id}`);
@@ -43,6 +46,43 @@ function App() {
       console.log(err);
     }
   };
+
+  //update the item
+  const updateItem = async (e) => {
+    e.preventDefault();
+    try {
+      const res = await axios.put(
+        `http://localhost:5500/api/item/${isUpdating}`,
+        { item: updateItemText }
+      );
+      console.log(res.data);
+      const updatedItemIndex = items.findIndex(
+        (item) => item._id === isUpdating
+      );
+      console.log(updatedItemIndex);
+      const updatedItem = (items[updatedItemIndex].item = updateItemText);
+    } catch (err) {
+      console.log(err);
+    }
+    setUpdateItemText("");
+    setIsUpdating("");
+  };
+
+  //update form
+  const renderUpdateForm = () => (
+    <form className="update-form" onSubmit={(e) => updateItem(e)}>
+      <input
+        type="text"
+        className="update-new-input"
+        placeholder="New Item"
+        onChange={(e) => setUpdateItemText(e.target.value)}
+        value={updateItemText}
+      />
+      <button type="submit" className="btn update-btn">
+        Update
+      </button>
+    </form>
+  );
 
   return (
     <div className="App">
@@ -64,14 +104,27 @@ function App() {
         {items.map((item) => {
           return (
             <div className="todo-item" key={item._id}>
-              <p className="item-content">{item.item}</p>
-              <button className="btn update-btn">Update</button>
-              <button
-                className="btn delete-btn"
-                onClick={() => deleteItem(item._id)}
-              >
-                Delete
-              </button>
+              {isUpdating === item._id ? (
+                renderUpdateForm()
+              ) : (
+                <>
+                  <p className="item-content">{item.item}</p>
+                  <button
+                    className="btn update-btn"
+                    onClick={() => {
+                      setIsUpdating(item._id);
+                    }}
+                  >
+                    Update
+                  </button>
+                  <button
+                    className="btn delete-btn"
+                    onClick={() => deleteItem(item._id)}
+                  >
+                    Delete
+                  </button>
+                </>
+              )}
             </div>
           );
         })}

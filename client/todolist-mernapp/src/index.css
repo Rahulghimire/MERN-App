@@ -31,7 +31,8 @@ body {
   display: flex;
   flex-direction: row;
 }
-.container_input input[type="text"] {
+.container_input input[type="text"],
+.update-form input[type="text"] {
   padding: 10px;
   margin-right: 10px;
   border-radius: 5px;
